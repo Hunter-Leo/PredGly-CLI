@@ -81,8 +81,10 @@ def main(sequence, threshold, out):
             for r in results:
                 click.echo('{:<10} {:<12} {:<15}'.format(r['position'], r['amino_acid'], r['probability']))
             click.echo('-' * 50)
+            click.echo('Total sites found: {}'.format(len(results)))
         else:
             click.echo('No glycation sites predicted above threshold {}'.format(threshold))
+            click.echo('Total sites found: 0')
         
         # Save to JSON if requested
         if out:
@@ -92,6 +94,7 @@ def main(sequence, threshold, out):
             output_data = {
                 'sequence': sequence,
                 'threshold': threshold,
+                'total': len(results),
                 'results': results
             }
             
