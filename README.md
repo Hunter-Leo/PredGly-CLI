@@ -1,4 +1,104 @@
-# PredGly
+# PredGly-CLI
+
+A modern command-line interface for PredGly, a machine learning tool for predicting lysine glycation sites in homo sapiens proteins.
+
+This project extends the original [PredGly](https://github.com/yujialinncu/PredGly) with a user-friendly CLI tool that provides:
+- Direct protein sequence input (no file creation needed)
+- Clean, modern command-line interface
+- JSON output format for easy integration
+- Cross-platform compatibility via conda environments
+
+## Quick Start
+
+### Installation
+```bash
+# Clone the repository
+git clone https://github.com/Hunter-Leo/PredGly-CLI.git
+cd PredGly-CLI
+
+# Create conda environment
+mamba create -n predgly python=2.7 -y
+mamba run -n predgly pip install numpy pandas matplotlib scipy scikit-learn click
+
+# Install CLI tool
+conda run -n predgly pip install -e .
+```
+
+### Usage Examples
+
+#### Basic Prediction
+```bash
+conda run -n predgly predgly "MRALRAGLTLASGAGLGAVVEGWRRRREDARAAPGLLGRLPVLPVAAAAELPPVPGGPRGPGELAKYGLPGLAQLKSRESYVLCYDPRTRGALWVVEQLRPERLRGDGDRRECDFREDDS"
+```
+
+**Output:**
+```
+Predicted glycation sites:
+--------------------------------------------------
+Position   Amino Acid   Probability    
+--------------------------------------------------
+66         K            0.56711315329  
+--------------------------------------------------
+```
+
+#### With Custom Threshold
+```bash
+conda run -n predgly predgly "PROTEIN_SEQUENCE" --threshold 0.7
+```
+
+#### Save Results to JSON
+```bash
+conda run -n predgly predgly "PROTEIN_SEQUENCE" --out results.json
+```
+
+**JSON Output Format:**
+```json
+{
+  "sequence": "MRALRAGLTLASGAGLGAVVEGWRRRREDARAAPGLLGRLPVLPVAAAAELPPVPGGPRGPGELAKYGLPGLAQLKSRESYVLCYDPRTRGALWVVEQLRPERLRGDGDRRECDFREDDS",
+  "threshold": 0.5,
+  "results": [
+    {
+      "position": 66,
+      "amino_acid": "K",
+      "probability": 0.56711315329
+    }
+  ]
+}
+```
+
+#### No Results Found
+When no glycation sites are predicted, an empty JSON `{}` is saved if `--out` is specified.
+
+## CLI Options
+
+- `SEQUENCE`: Protein sequence string (required)
+- `--threshold, -t`: Probability threshold for prediction (default: 0.5)
+- `--out, -o`: Output JSON file path (optional)
+- `--help`: Show help message
+
+## Features
+
+✅ **Direct sequence input** - No need to create input files  
+✅ **Modern CLI interface** - Built with Click framework  
+✅ **JSON output** - Easy integration with other tools  
+✅ **Flexible thresholds** - Customize prediction sensitivity  
+✅ **Cross-platform** - Works via conda environments  
+✅ **Backward compatible** - Original script still available  
+
+## Requirements
+
+- Python 2.7 (via conda environment)
+- Dependencies: numpy, pandas, matplotlib, scipy, scikit-learn, click
+- Conda or Mamba package manager
+
+## Installation Details
+
+See [INSTALL.md](INSTALL.md) for detailed installation instructions.
+
+---
+
+# Original PredGly Documentation
+
 PredGly uses a machine learning method to predit lysine glycation sites for homo sapiens. Users can run program with specified protein sequences.
 
 # Installation
